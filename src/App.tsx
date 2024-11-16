@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from "react-router-dom";
+import ContactForm from "./pages/ContactForm";
+import Spline from '@splinetool/react-spline';
+import Main from './layout/main';
 
-function App() {
+const App = () => {
+  console.log(process.env.REACT_APP_BASE_URL)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="flex w-screen h-screen overflow-hidden">
+      <main className="w-full">
+        <Spline
+          scene="https://prod.spline.design/UEJVMcA8n7-hw759/scene.splinecode"
+        />
+      </main>
+      <Routes>
+        <Route path="/" element={<Main />}>
+          <Route index element={<ContactForm />} />
+          <Route path="view-contact" />
+        </Route>
+      </Routes>
     </div>
   );
-}
+};
 
 export default App;
