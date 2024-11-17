@@ -7,6 +7,6 @@ export const contactSchema = z.object({
     phoneNumber: z
         .string()
         .regex(/^\d{10}$/, "Phone number must be 10 digits"),
-    company: z.string().optional(),
-    jobTitle: z.string().optional(),
+    company: z.string().min(1,"Company name is required"),
+    jobTitle: z.string().min(1,"Job title is required"),
 });

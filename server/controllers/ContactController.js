@@ -12,14 +12,16 @@ const getAllContacts = async (req, res) => {
 
 // Add a new contact
 const addContact = async (req, res) => {
-  const { firstName, lastName, email, phone, jobTitle, company } = req.body;
+  console.log("in the addContact server func");
+  console.log(req.body);
+  const { firstName, lastName, email, phoneNumber, jobTitle, company } = req.body;
 
-  if (!firstName || !lastName || !email || !phone || !jobTitle || !company) {
-    return res.status(400).json({ success: false, message: 'First Name and Email are required!' });
+  if (!firstName || !lastName || !email || !phoneNumber || !jobTitle || !company) {
+    return res.status(400).json({ success: false, message: 'All fields are required!' });
   }
 
   try {
-    const newContact = new Contact({ firstName, lastName, email, phone });
+    const newContact = new Contact({ firstName, lastName, email, phone: phoneNumber, jobTitle, company });
     await newContact.save();
     res.status(201).json({ success: true, message: 'Contact added successfully!', contact: newContact });
   } catch (error) {
@@ -30,8 +32,10 @@ const addContact = async (req, res) => {
 // Delete a contact
 const deleteContact = async (req, res) => {
   const { id } = req.params;
+  // console.log("in the delete contact server func ", id);
 
   try {
+
     const deletedContact = await Contact.findByIdAndDelete(id);
 
     if (!deletedContact) {
@@ -47,20 +51,22 @@ const deleteContact = async (req, res) => {
 // Update a contact
 const updateContact = async (req, res) => {
   const { id } = req.params;
-  const { firstName, lastName, email, phone } = req.body;
+  const { firstName, lastName, email, phone, jobTitle, company } = req.body;
+  // console.log(req.body);
 
   try {
     const updatedContact = await Contact.findByIdAndUpdate(
       id,
-      { firstName, lastName, email, phone },
+      { firstName, lastName, email, phone, jobTitle, company },
       { new: true }
     );
 
     if (!updatedContact) {
       return res.status(404).json({ success: false, message: 'Contact not found!' });
     }
+    // console.log(updatedContact)
 
-    res.status(200).json({ success: true, message: 'Contact updated successfully!', contact: updatedContact });
+    res.status(200).json({ success: true, message: 'Contact updated successfully!', updatedContact });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Failed to update contact', error: error.message });
   }

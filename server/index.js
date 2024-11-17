@@ -1,11 +1,16 @@
 const express = require('express');
 const routes = require('./routes');
+const cors = require('cors');
 const { connect } = require('./config/database');
 
 const app = express();
 const port = 4000;
 
 connect();
+app.use(cors({
+  origin: ['http://localhost:3000'],
+  methods: ['GET,HEAD,PUT,PATCH,POST,DELETE'],
+}));
 
 app.use(express.json());
 app.use('/api',routes);

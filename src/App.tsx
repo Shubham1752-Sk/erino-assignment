@@ -1,10 +1,11 @@
 import { Routes, Route } from "react-router-dom";
-import ContactForm from "./pages/ContactForm";
 import Spline from '@splinetool/react-spline';
 import Main from './layout/main';
+import ContactForm from "./pages/ContactForm";
+import ViewContact from "./pages/ViewContact";
 
 const App = () => {
-  console.log(process.env.REACT_APP_BASE_URL)
+
   return (
     <div className="flex w-screen h-screen overflow-hidden">
       <main className="w-full">
@@ -15,7 +16,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Main />}>
           <Route index element={<ContactForm />} />
-          <Route path="view-contact" />
+          <Route path="view-contact" element={<ViewContact />} />
         </Route>
       </Routes>
     </div>

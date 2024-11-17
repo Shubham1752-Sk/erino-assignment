@@ -3,6 +3,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Grid } from "@mui/material";
 import { contactSchema } from "../lib/zod";
+import { addContact } from "../services/operations/contactOperations";
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
@@ -13,7 +14,7 @@ const Input = ({ field, label, error, helperText }: any) => {
             <input
                 {...field}
                 type="text"
-                className="mt-1 block w-full py-2 px-2 rounded-md outline-none bg-transparent focus:bg-[rgba(255,255,255,0.2)] text-white border border-[#3a3c3d] shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                className="mt-1 block w-full py-2 px-2 rounded-md outline-none bg-transparent  text-white border border-[#3a3c3d] shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             />
             {error && <div className="text-red-500">{helperText}</div>}
         </div>
@@ -38,7 +39,10 @@ const ContactForm = () => {
         },
     });
 
-    const submitHandler = (data: ContactFormData) => {
+    const submitHandler = async (data: ContactFormData) => {
+        console.log(data);
+        // return
+        const response = await addContact(data);
         // onSubmit(data); // Pass data to parent or API
         reset(); // Clear the form after submission
     };
